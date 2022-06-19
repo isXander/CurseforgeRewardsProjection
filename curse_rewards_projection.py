@@ -3,6 +3,7 @@ from currency_converter import CurrencyConverter
 import matplotlib.pyplot as graph
 import locale
 import os
+import textwrap
 
 
 def indices(data):
@@ -27,8 +28,10 @@ except OSError:
 print("-" * terminal_width)
 print("Curseforge Rewards Projector by isXander")
 print("https://github.com/isXander/CurseforgeRewardsProjection")
-print("This script can obviously not see into the future and all numbers given are an estimate based on the data "
-      "given. The more data, the more accurate of an estimate.")
+print()
+print('\n'.join(textwrap.wrap("This script can obviously not see into the future and all numbers given are an "
+                              "estimate based on the data given. The more data, the more accurate of an estimate.",
+                              terminal_width)))
 print("-" * terminal_width)
 print()
 
