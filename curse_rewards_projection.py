@@ -16,7 +16,7 @@ def indices(data):
 def reject_outliers(data, m=2.):
     d = np.abs(data - np.median(data))
     mdev = np.median(d)
-    s = d / mdev if mdev else 0.
+    s = d / (mdev if mdev else 1.)
     return data[s < m]
 
 
@@ -83,7 +83,7 @@ for i in range(days):
 point_value = 0.05
 usd = amount * point_value
 
-locale.setlocale(locale.LC_ALL, locale.getdefaultlocale())
+locale.setlocale(locale.LC_ALL, '')
 currency = locale.localeconv()['int_curr_symbol'].strip()
 symbol = locale.localeconv()['currency_symbol']
 converter = CurrencyConverter()
