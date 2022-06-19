@@ -4,6 +4,7 @@ import matplotlib.pyplot as graph
 import locale
 import os
 import textwrap
+import math
 
 
 def indices(data):
@@ -67,31 +68,52 @@ if show_graphs:
     graph.ylabel("Difference")
     graph.show()
 
-days = int(input("Days to calculate: "))
-if days / len(diff) > 1.:
-    print("Warning: too little data to provide a realistic estimate")
 existing_balance = int(input("Existing points balance: "))
-
-starting = data[-1]
-
-amount = existing_balance
-for i in range(days):
-    x = len(diff) + i
-    point_increase = coefficient_x2 * x ** 2 + coefficient_x * x + y_intercept
-    amount += starting + point_increase * i
-
-point_value = 0.05
-usd = amount * point_value
 
 locale.setlocale(locale.LC_ALL, '')
 currency = locale.localeconv()['int_curr_symbol'].strip()
 symbol = locale.localeconv()['currency_symbol']
 converter = CurrencyConverter()
-converted_currency = "~" + symbol + np.format_float_positional(
-    converter.convert(usd, "USD", currency),
-    precision=2, fractional=True, min_digits=2
-)
-usd_formatted = "$" + np.format_float_positional(usd, precision=2, fractional=True, min_digits=2)
 
-print("In", days, "days you will have made", converted_currency,
-      "(" + usd_formatted + " / " + str(int(amount)) + " points)")
+match int(input("1 = Days -> $$$\n2 = $$$ -> Days\nEnter info you want to calculate: ")):
+    case 1:
+        days = int(input("Days to calculate: "))
+        if days / len(diff) > 1.:
+            print("Warning: too little data to provide a realistic estimate")
+
+        starting = data[-1]
+
+        amount = existing_balance
+        for i in range(days):
+            x = len(diff) + i
+            point_increase = coefficient_x2 * x ** 2 + coefficient_x * x + y_intercept
+            amount += starting + point_increase * i
+
+        point_value = 0.05
+        usd = amount * point_value
+
+        converted_currency = np.format_float_positional(
+            converter.convert(usd, "USD", currency),
+            precision=2, fractional=True, min_digits=2
+        )
+        usd_formatted = np.format_float_positional(usd, precision=2, fractional=True, min_digits=2)
+
+        print(f"In {days} you will have made roughly {symbol}{converted_currency} (${usd_formatted} / {math.ceil(amount)} points)")
+    case 2:
+        desired = float(input("How many days until you get " + symbol))
+        desired_usd = converter.convert(desired, currency, "USD")
+        desired_points = desired_usd / 0.05
+
+        starting = data[-1]
+        days = 0
+        balance = existing_balance
+        while balance < desired_points:
+            x = len(diff) + days
+            point_increase = coefficient_x2 * x ** 2 + coefficient_x * x + y_intercept
+            balance += starting + point_increase * days
+            days += 1
+
+        if days / len(diff) > 1.:
+            print("Warning: not enough data to compute a realistic estimate")
+
+        print(f"You will have {symbol}{desired} in {math.ceil(days)} days.")
