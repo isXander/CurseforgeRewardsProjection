@@ -68,4 +68,4 @@ converted_currency = symbol + np.format_float_positional(
 )
 usd_formatted = "$" + np.format_float_positional(usd, precision=2, fractional=True, min_digits=2)
 
-print("In", days, "days you will make", converted_currency, "(" + usd_formatted + " / " + str(int(amount)) + " points)")
+print("In", days, "days you will have made", converted_currency, "(" + usd_formatted + " / " + str(int(amount)) + " points)")
