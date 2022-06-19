@@ -36,7 +36,7 @@ print('\n'.join(textwrap.wrap("This script can obviously not see into the future
 print("-" * terminal_width)
 print()
 
-show_graphs = input("Display graphs [y/n]: ").lower() in ['true', 'y', '1', 'yes']
+show_graphs = input("Display graphs [y/N]: ").lower() in ['true', 'y', '1', 'yes']
 
 input('Press enter when "./points_earned.txt" is present with the format of\n1.25\n3.54\netc..\n')
 
@@ -98,7 +98,7 @@ match int(input("1 = Days -> $$$\n2 = $$$ -> Days\nEnter info you want to calcul
         )
         usd_formatted = np.format_float_positional(usd, precision=2, fractional=True, min_digits=2)
 
-        print(f"In {days} you will have made roughly {symbol}{converted_currency} (${usd_formatted} / {math.ceil(amount)} points)")
+        print(f"In {days} days you will have made roughly {symbol}{converted_currency} (${usd_formatted} / {math.ceil(amount)} points)")
     case 2:
         desired = float(input("How many days until you get " + symbol))
         desired_usd = converter.convert(desired, currency, "USD")
