@@ -27,22 +27,22 @@ file.close()
 if data[0] > data[-1]:
     data = data[::-1]
 
+graph.figure(1)
 graph.plot(indices(data), data)
 graph.title("Points Graph")
 graph.xlabel("Day")
 graph.ylabel("Points Earned")
-graph.figure(1)
 graph.show()
 
 diff = reject_outliers(np.diff(data))
 diff_indices = indices(diff)
 gradient, y_intercept = np.polyfit(diff_indices, diff, 1)
+graph.figure(2)
 graph.plot(diff_indices, diff)
 graph.plot(diff_indices, gradient * diff_indices + y_intercept)
 graph.title("Points Difference Graph")
 graph.xlabel("Day")
 graph.ylabel("Difference")
-graph.figure(2)
 graph.show()
 
 days = int(input("Days to calculate: "))
@@ -68,4 +68,4 @@ converted_currency = symbol + np.format_float_positional(
 )
 usd_formatted = "$" + np.format_float_positional(usd, precision=2, fractional=True, min_digits=2)
 
-print("In", days, "days you will make", converted_currency, "(" + usd_formatted + ")")
+print("In", days, "days you will make", converted_currency, "(" + usd_formatted + " / " + str(int(amount)) + " points)")
