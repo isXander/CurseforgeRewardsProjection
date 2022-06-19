@@ -10,6 +10,7 @@ and estimate how much you will earn using your points data in a certain amount o
 
 ### Screenshots
 *Data displayed in examples is not real!*
+
 ![CLI](screenshots/cli.png)
 ![Points Earned Graph](screenshots/points_earned_graph.png)
 ![Points Earned Difference Graph](screenshots/points_earned_more_than_previous_day.png)
